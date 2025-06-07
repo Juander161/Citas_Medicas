@@ -1,0 +1,55 @@
+body {
+    font-family: 'Kanit', sans-serif;
+  }
+
+  /* Estilo para los inputs con iconos */
+.input-group {
+  margin-bottom: 1rem;
+}
+
+.input-group-text {
+  background-color: #f8f9fa;
+  border-right: none;
+}
+
+.input-group .form-control {
+  border-left: none;
+  padding-left: 0;
+}
+
+.input-group .form-control:focus {
+  box-shadow: none;
+  border-color: #ced4da;
+}
+
+/* Estilo para los iconos */
+.input-group-text i {
+  color: #6c757d;
+  width: 16px;
+}
+
+/* Estilos para el botón de login */
+.login-btn {
+  background-color: #0084ff;
+  border-color: #0084ff;
+  color: white !important; /* Texto blanco */
+}
+
+.login-btn:hover {
+  background-color: #0069d9;
+  border-color: #0069d9;
+  color: white !important; /* Texto blanco al hacer hover */
+}
+
+.login-btn:active,
+.login-btn:focus {
+  background-color: #0056b3;
+  border-color: #0056b3;
+  color: white !important; /* Texto blanco en estados active/focus */
+  box-shadow: 0 0 0 0.25rem rgba(0, 132, 255, 0.5);
+  color: rgb(0, 0, 0) !important;
+}
+
+
+nav{
+  background: linear-gradient(to right, #0084ff 0%, #0084ff 51%, #0084ff 100%)}

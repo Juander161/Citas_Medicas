@@ -1,0 +1,190 @@
+<!-- views/doctor/citas.ejs -->
+<%- include('../layout/header') %>
+<%- include('../layout/menu') %>
+
+<div class="container mt-5">
+  <h2 class="mb-4">
+    <i class="fa-solid fa-calendar-day mr-2"></i> Mis Citas</h2>
+  
+  <ul class="nav nav-tabs mb-4">
+    <li class="nav-item">
+      <a class="nav-link active" id="pendientes-tab" data-bs-toggle="tab" href="#pendientes">
+        <i class="fa-solid fa-clock mr-2"></i> Pendientes
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="confirmadas-tab" data-bs-toggle="tab" href="#confirmadas">
+        <i class="fa-solid fa-check-circle mr-2"></i>   Confirmadas
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="completadas-tab" data-bs-toggle="tab" href="#completadas">
+        <i class="fa-solid fa-calendar-check mr-2"></i> Completadas
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="canceladas-tab" data-bs-toggle="tab" href="#canceladas">
+        <i class="fa-solid fa-ban mr-2"></i> Canceladas
+      </a>
+    </li>
+  </ul>
+  
+  <div class="tab-content">
+    <div class="tab-pane fade show active" id="pendientes">
+      <div class="card shadow">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th><i class="fa-solid fa-calendar mr-2"></i>             Fecha</th>
+                  <th><i class="fa-solid fa-clock mr-2"></i>             Hora</th>
+                  <th><i class="fa-solid fa-user mr-2"></i>             Paciente</th>
+                  <th><i class="fa-solid fa-comment mr-2"></i>             Motivo</th>
+                  <th><i class="fa-solid fa-cogs mr-2"></i>             Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% citas.filter(cita => cita.estado === 'pendiente').forEach(cita => { %>
+                  <tr>
+                    <td><%= new Date(cita.fecha).toLocaleDateString() %></td>
+                    <td><%= cita.hora.substring(0, 5) %></td>
+                    <td><%= cita.paciente.nombre %> <%= cita.paciente.apellido %></td>
+                    <td><%= cita.motivo %></td>
+                    <td>
+                      <a href="/doctor/citas/estado/<%= cita.id %>/confirmada" class="btn btn-sm btn-success">
+                        <i class="fa-solid fa-check"></i> Confirmar
+                      </a>
+                      <a href="/doctor/citas/estado/<%= cita.id %>/cancelada" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de cancelar esta cita?')">
+                        <i class="fa-solid fa-times"></i> Cancelar
+                      </a>
+                    </td>
+                  </tr>
+                <% }); %>
+                <% if (citas.filter(cita => cita.estado === 'pendiente').length === 0) { %>
+                  <tr>
+                    <td colspan="5" class="text-center no-citas-pendientes">No hay citas pendientes</td> 
+                  </tr>
+                <% } %>                               
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div> 
+    
+    <div class="tab-pane fade" id="confirmadas">
+      <div class="card shadow">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th><i class="fa-solid fa-calendar mr-2"></i>Fecha</th>
+                  <th><i class="fa-solid fa-clock mr-2"></i>Hora</th>
+                  <th><i class="fa-solid fa-user mr-2"></i>Paciente</th>
+                  <th><i class="fa-solid fa-comment mr-2"></i>Motivo</th>
+                  <th><i class="fa-solid fa-cogs mr-2"></i>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% citas.filter(cita => cita.estado === 'confirmada').forEach(cita => { %>
+                  <tr>
+                    <td><%= new Date(cita.fecha).toLocaleDateString() %></td>
+                    <td><%= cita.hora.substring(0, 5) %></td>
+                    <td><%= cita.paciente.nombre %> <%= cita.paciente.apellido %></td>
+                    <td><%= cita.motivo %></td>
+                    <td>
+                      <a href="/doctor/citas/estado/<%= cita.id %>/completada" class="btn btn-sm btn-primary">
+                        <i class="fa-solid fa-check-double"></i> Concluir
+                      </a>
+                      <a href="/doctor/citas/estado/<%= cita.id %>/cancelada" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de cancelar esta cita?')">
+                        <i class="fa-solid fa-times"></i> Cancelar
+                      </a>
+                    </td>
+                  </tr>
+                <% }); %>
+                <% if (citas.filter(cita => cita.estado === 'confirmada').length === 0) { %>
+                  <tr>
+                    <td colspan="5" class="text-center">No hay citas confirmadas</td>
+                  </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="tab-pane fade" id="completadas">
+      <div class="card shadow">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th><i class="fa-solid fa-calendar mr-2"></i>Fecha</th>
+                  <th><i class="fa-solid fa-clock mr-2"></i>Hora</th>
+                  <th><i class="fa-solid fa-user mr-2"></i>Paciente</th>
+                  <th><i class="fa-solid fa-comment mr-2"></i>Motivo</th>
+                  <th><i class="fa-solid fa-cogs mr-2"></i>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% citas.filter(cita => cita.estado === 'completada').forEach(cita => { %>
+                  <tr>
+                    <td><%= new Date(cita.fecha).toLocaleDateString() %></td>
+                    <td><%= cita.hora.substring(0, 5) %></td>
+                    <td><%= cita.paciente.nombre %> <%= cita.paciente.apellido %></td>
+                    <td><%= cita.motivo %></td>
+                  </tr>
+                <% }); %>
+                <% if (citas.filter(cita => cita.estado === 'completada').length === 0) { %>
+                  <tr>
+                    <td colspan="5" class="text-center">No hay citas completadas</td>
+                  </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="tab-pane fade" id="canceladas">
+      <div class="card shadow">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th><i class="fa-solid fa-calendar mr-2"></i>Fecha</th>
+                  <th><i class="fa-solid fa-clock mr-2"></i>Hora</th>
+                  <th><i class="fa-solid fa-user mr-2"></i>Paciente</th>
+                  <th><i class="fa-solid fa-comment mr-2"></i>Motivo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% citas.filter(cita => cita.estado === 'cancelada').forEach(cita => { %>
+                  <tr>
+                    <td><%= new Date(cita.fecha).toLocaleDateString() %></td>
+                    <td><%= cita.hora.substring(0, 5) %></td>
+                    <td><%= cita.paciente.nombre %> <%= cita.paciente.apellido %></td>
+                    <td><%= cita.motivo %></td>
+                  </tr>
+                <% }); %>
+                <% if (citas.filter(cita => cita.estado === 'cancelada').length === 0) { %>
+                  <tr>
+                    <td colspan="4" class="text-center">No hay citas canceladas</td>
+                  </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../layout/footer') %>

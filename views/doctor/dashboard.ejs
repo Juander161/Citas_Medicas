@@ -1,0 +1,101 @@
+<!-- views/doctor/dashboard.ejs -->
+<%- include('../layout/header') %>
+<%- include('../layout/menu') %>
+
+<div class="container mt-5">
+  <h2 class="mb-4">
+    <i class="fa-solid fa-user-doctor mr-2"></i> Panel Doctor
+  </h2>
+ 
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card text-center mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Citas Pendientes</h5>
+          <p class="card-text display-4"><%= citas.filter(cita => cita.estado === 'pendiente').length %></p>
+          <a href="/doctor/citas" class="btn btn-primary">Ver Citas</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="card text-center mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Citas Completadas</h5>
+          <p class="card-text display-4"><%= citas.filter(cita => cita.estado === 'completada').length %></p>
+          <a href="/doctor/citas" class="btn btn-primary">Ver Citas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4>Próximas Citas</h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th><i class="fa-solid fa-calendar-days"></i> Fecha</th>
+                  <th><i class="fa-solid fa-clock"></i> Hora</th>
+                  <th><i class="fa-solid fa-user"></i> Paciente</th>
+                  <th><i class="fa-solid fa-file-lines"></i> Motivo</th>
+                  <th><i class="fa-solid fa-circle-info"></i> Estado</th>
+                  <th><i class="fa-solid fa-gears"></i> Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%
+                  const citasPendientes = citas.filter(cita => cita.estado === 'pendiente' || cita.estado === 'confirmar').slice(0, 5);
+                  if (citasPendientes.length > 0) {
+                    citasPendientes.forEach(cita => {
+                %>
+                  <tr>
+                    <td><%= new Date(cita.fecha).toLocaleDateString() %></td>
+                    <td><%= cita.hora.substring(0, 5) %></td>
+                    <td><%= cita.paciente.nombre %> <%= cita.paciente.apellido %></td>
+                    <td><%= cita.motivo %></td>
+                    <td>
+                      <% if (cita.estado === 'pendiente') { %>
+                        <span class="badge bg-warning text-dark">
+                          <i class="fa-solid fa-hourglass-half"></i> Pendiente
+                        </span>
+                      <% } else if (cita.estado === 'confirmada') { %>
+                        <span class="badge bg-success">
+                          <i class="fa-solid fa-circle-check"></i> Confirmada
+                        </span>
+                      <% } %>
+                    </td>
+                    <td>
+                      <% if (cita.estado === 'pendiente') { %>
+                        <a href="/doctor/citas/estado/<%= cita.id %>/confirmada" class="btn btn-sm btn-success">
+                          <i class="fa-solid fa-check"></i> Confirmar
+                        </a>
+                      <% } else if (cita.estado === 'confirmada') { %>
+                        <a href="/doctor/citas/diagnostico/<%= cita.id %>" class="btn btn-sm btn-primary">
+                          <i class="fa-solid fa-notes-medical"></i> Diagnóstico
+                        </a>
+                      <% } %>
+                    </td>
+                  </tr>
+                <% }); %>
+                <% } else { %>
+                  <tr>
+                    <td colspan="6" class="text-center">No hay citas pendientes ni por confirmar</td>
+                  </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../layout/footer') %>

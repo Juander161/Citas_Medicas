@@ -1,0 +1,45 @@
+<%- include('../layout/header') %>
+<%- include('../layout/menu') %>
+
+<div class="container mt-5">
+  <h2 class="mb-4">Historial del Paciente: <%= paciente.nombre %> <%= paciente.apellido %></h2>
+
+  <div class="card shadow">
+    <div class="card-body">
+      <% if (citas.length === 0) { %>
+        <p class="text-center">Este paciente no tiene historial de citas.</p>
+      <% } else { %>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Doctor</th>
+              <th>Motivo</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% citas.forEach(cita => { %>
+              <tr>
+                <td><%= new Date(cita.fecha).toLocaleDateString() %></td>
+                <td><%= cita.hora.substring(0, 5) %></td>
+                <td><%= cita.doctor.nombre %> <%= cita.doctor.apellido %></td>
+                <td><%= cita.motivo %></td>
+                <td>
+                  <span class="badge bg-<%= cita.estado === 'pendiente' ? 'warning' :
+                                             cita.estado === 'confirmada' ? 'primary' :
+                                             cita.estado === 'completada' ? 'success' : 'danger' %>">
+                    <%= cita.estado %>
+                  </span>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<%- include('../layout/footer') %>

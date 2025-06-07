@@ -1,0 +1,77 @@
+<%- include('../layout/header') %>
+<%- include('../layout/menu') %>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-body">
+          <h1 class="card-title text-center mb-4">Editar Cita</h1>
+          
+          <% if (mensaje) { %>
+            <div class="alert alert-danger"><%= mensaje %></div>
+          <% } %>
+          
+          <form action="/admin/citas/editar/<%= cita.id %>" method="POST" id="formulario-cita">
+            <div class="mb-3">
+              <label for="paciente" class="form-label">Paciente</label>
+              <select class="form-select" id="pacienteId" name="pacienteId" required>
+                <option value="">Seleccione un paciente</option>
+                <% pacientes.forEach(paciente => { %>
+                  <option value="<%= paciente.id %>" <%= cita.pacienteId === paciente.id ? 'selected' : '' %>>
+                    <%= paciente.nombre %> <%= paciente.apellido %>
+                  </option>
+                <% }) %>
+              </select>
+            </div>
+            
+            <div class="mb-3">
+              <label for="doctor" class="form-label">Doctor</label>
+              <select class="form-select" id="doctorId" name="doctorId" required>
+                <option value="">Seleccione un doctor</option>
+                <% doctores.forEach(doctor => { %>
+                  <option value="<%= doctor.id %>" <%= cita.doctorId === doctor.id ? 'selected' : '' %>>
+                    <%= doctor.nombre %> <%= doctor.apellido %> - <%= doctor.especialidad %>
+                  </option>
+                <% }) %>
+              </select>
+            </div>
+            
+            <div class="mb-3">
+              <label for="fecha" class="form-label">Fecha</label>
+              <input type="date" class="form-control" id="fecha" name="fecha" required value="<%= cita.fecha %>">
+            </div>
+            
+            <div class="mb-3">
+              <label for="hora" class="form-label">Hora</label>
+              <input type="time" class="form-control" id="hora" name="hora" required value="<%= cita.hora.substring(0, 5) %>">
+              <small class="text-muted">Nota: Asegúrese de que la hora esté disponible para el doctor seleccionado</small>
+            </div>
+            
+            <div class="mb-3">
+              <label for="motivo" class="form-label">Motivo de la consulta</label>
+              <textarea class="form-control" id="motivo" name="motivo" rows="3" required><%= cita.motivo %></textarea>
+            </div>
+            
+            <div class="mb-3">
+              <label for="estado" class="form-label">Estado</label>
+              <select class="form-select" id="estado" name="estado" required>
+                <option value="pendiente" <%= cita.estado === 'pendiente' ? 'selected' : '' %>>Pendiente</option>
+                <option value="confirmada" <%= cita.estado === 'confirmada' ? 'selected' : '' %>>Confirmada</option>
+                <option value="cancelada" <%= cita.estado === 'cancelada' ? 'selected' : '' %>>Cancelada</option>
+                <option value="completada" <%= cita.estado === 'completada' ? 'selected' : '' %>>Completada</option>
+              </select>
+            </div>
+            
+            <div class="d-grid gap-2 mt-4">
+              <button type="submit" class="btn btn-azul">Guardar Cambios</button>
+              <a href="/admin/citas" class="btn btn-secondary">Cancelar</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../layout/footer') %>
+

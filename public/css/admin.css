@@ -1,0 +1,56 @@
+body {
+    font-family: 'Kanit', sans-serif;
+  }
+
+  .btn-azul {
+    background-color: #0084ff !important;
+    border-color: #0084ff !important;
+    color: white !important;
+  }
+  .btn-azul:hover {
+    background-color: #0069d9 !important;
+    border-color: #0069d9 !important;
+  }
+
+  /* Contenedor general de la tabla */
+.table-responsive {
+  max-height: 300px; /* puedes ajustar esta altura a tu gusto */
+  overflow-y: auto;
+}
+
+/* Opcional para mejorar el scroll en algunos navegadores */
+.table-responsive::-webkit-scrollbar {
+  width: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* Contenedor que limita la altura de la tabla */
+.table-responsive {
+  max-height: 400px; /* ajusta la altura según tu diseño */
+  overflow-y: auto;
+}
+
+/* Opcional: mejora visual del scroll */
+.table-responsive::-webkit-scrollbar {
+  width: 8px;
+}
+.table-responsive::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+.table-responsive::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+
+
+nav{
+  background: linear-gradient(to right, #0084ff 0%, #0084ff 51%, #0084ff 100%)}

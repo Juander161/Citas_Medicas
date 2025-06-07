@@ -1,0 +1,66 @@
+<%- include('layout/header') %>
+<%- include('layout/menu') %>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card login-card shadow">
+        <div class="card-body">
+          <div class="text-center">
+            <i class="fas fa-user-circle fa-3x"></i> <!-- Icono de usuario arriba -->
+            <h2 class="text-center mb-4 login-header">Iniciar Sesión</h2>
+          </div>
+
+          <% if (mensaje) { %>
+            <div class="alert alert-danger text-center">
+              <%= mensaje %>
+            </div>
+          <% } %>
+
+          <form method="POST" action="/login" class="login-form">
+            <div class="mb-3">
+              <label for="email" class="form-label">Correo electrónico</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  value="<%= typeof email !== 'undefined' ? email : '' %>"
+                  required
+                />
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="password" class="form-label">Contraseña</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  name="password"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn login-btn">
+                <i class="fas fa-sign-in-alt"></i> Ingresar <!-- Icono de inicio de sesión -->
+              </button>
+            </div>
+          </form>
+
+          <div class="text-center mt-3">
+            <p>¿No tienes cuenta? <a href="/registro">Regístrate aquí</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('layout/footer') %>

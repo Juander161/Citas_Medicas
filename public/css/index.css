@@ -1,0 +1,41 @@
+body {
+  font-family: 'Kanit', sans-serif;
+}
+
+.hero-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9f5ff 100%);
+}
+
+.icon-wrapper {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg-primary-light {
+  background-color: #e9f5ff;
+}
+
+.text-primary {
+  color: #0084ff !important;
+}
+
+.btn-primary {
+  background-color: #0084ff;
+  border-color: #0084ff;
+}
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+nav{
+  background: linear-gradient(to right, #0084ff 0%, #0084ff 51%, #0084ff 100%)}

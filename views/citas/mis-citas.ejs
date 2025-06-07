@@ -1,0 +1,70 @@
+<%- include('../layout/header') %>
+<%- include('../layout/menu') %>
+
+
+<div class="container mt-5">
+  <h2 class="mb-4"><i class="fas fa-list-ul"></i> Mis Citas</h2> 
+  
+  <% if (citas.length === 0) { %>
+    <div class="alert alert-info" role="alert">
+      No tienes citas agendadas. <a href="/citas/nueva" class="alert-link">Agenda una nueva cita</a>.
+    </div>
+  <% } else { %>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card shadow">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Doctor</th>
+                    <th>Especialidad</th>
+                    <th>Motivo</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody> 
+                  <% citas.forEach(cita => { %>
+                    <tr>
+                      <td><%= new Date(cita.fecha).toLocaleDateString() %></td>
+                      <td><%= cita.hora.substring(0, 5) %></td>
+                      <td><%= cita.doctor.nombre %> <%= cita.doctor.apellido %></td>
+                      <td><%= cita.doctor.especialidad %></td>
+                      <td><%= cita.motivo %></td>
+                      <td>
+                        <% if (cita.estado === 'pendiente') { %>
+                          <span class="badge bg-warning text-dark">Pendiente</span>
+                        <% } else if (cita.estado === 'confirmada') { %>
+                          <span class="badge bg-success">Confirmada</span>
+                        <% } else if (cita.estado === 'cancelada') { %>
+                          <span class="badge bg-danger">Cancelada</span>
+                        <% } else if (cita.estado === 'completada') { %>
+                          <span class="badge bg-info">Completada</span>
+                        <% } %>
+                      </td>
+                      <td>
+                        <% if (cita.estado !== 'cancelada' && cita.estado !== 'completada') { %>
+                          <a href="/citas/cancelar/<%= cita.id %>" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de cancelar esta cita?')">Cancelar</a>
+                        <% } %>
+                      </td>
+                    </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% } %>
+  
+  <div class="mt-4">
+    <a href="/citas/nueva" class="btn btn-primary">Agendar Nueva Cita</a>
+  </div>
+</div>
+
+<%- include('../layout/footer') %>

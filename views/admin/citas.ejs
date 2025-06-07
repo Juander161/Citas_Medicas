@@ -1,0 +1,75 @@
+<%- include('../layout/header') %>
+<%- include('../layout/menu') %>
+
+
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Gestión de Citas Médicas</h1>
+    <a href="/admin/citas/nueva" class="btn btn-primary">
+      <i class="fas fa-plus-circle"></i> Nueva Cita
+    </a>
+  </div>
+
+  <% if (mensaje) { %>
+    <div class="alert alert-info text-center"><%= mensaje %></div>
+  <% } %>
+
+  <div class="card shadow">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>ID</th>
+              <th>Paciente</th>
+              <th>Doctor</th>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (citas && citas.length) { %>
+              <% citas.forEach(cita => { %>
+                <tr>
+                  <td><%= cita.id %></td>
+                  <td><%= cita.paciente?.nombre %> <%= cita.paciente?.apellido %></td>
+                  <td><%= cita.doctor?.nombre %> <%= cita.doctor?.apellido %></td>
+                  <td><%= new Date(cita.fecha).toLocaleDateString() %></td>
+                  <td><%= cita.hora.substring(0,5) %></td>
+                  <td>
+                    <span class="badge bg-<%= cita.estado === 'pendiente' ? 'warning' : 
+                                               cita.estado === 'confirmada' ? 'primary' :
+                                               cita.estado === 'completada' ? 'success' : 'danger' %>">
+                      <%= cita.estado %>
+                    </span>
+                  </td>
+                  <td>
+                    <div class="btn-group">
+                      <a href="/admin/citas/editar-cita/<%= cita.id %>" class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-edit"></i> Editar
+                      </a>
+                      <form action="/admin/citas/<%= cita.id %>/eliminar" method="POST"
+                            onsubmit="return confirm('¿Estás seguro de eliminar esta cita?')">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                          <i class="fas fa-trash-alt"></i> Eliminar
+                        </button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              <% }) %>
+            <% } else { %>
+              <tr>
+                <td colspan="7" class="text-center no-record">No hay citas registradas</td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../layout/footer') %>

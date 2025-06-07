@@ -1,0 +1,84 @@
+<%- include('layout/header') %>
+<%- include('layout/menu') %>
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <!-- Hero Section -->
+      <div class="text-center mb-5">
+        <div class="icon-wrapper bg-primary-light mb-4 mx-auto" style="width: 100px; height: 100px;">
+          <i class="fas fa-hospital-alt text-primary fa-3x"></i>
+        </div>
+        <h1 class="display-5 fw-bold text-primary mb-3">Clínica Salud Integral</h1>
+        <p class="lead text-muted">Tu salud en las mejores manos</p>
+      </div>
+
+      <!-- Features Cards -->
+      <div class="row g-4 mb-5">
+        <div class="col-md-6">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center p-4">
+              <div class="icon-wrapper bg-primary-light mb-3 mx-auto">
+                <i class="fas fa-calendar-check text-primary fa-2x"></i>
+              </div>
+              <h3 class="h5">Citas en Línea</h3>
+              <p class="text-muted">Reserva tu cita médica en minutos desde cualquier dispositivo, las 24 horas del día.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center p-4">
+              <div class="icon-wrapper bg-primary-light mb-3 mx-auto">
+                <i class="fas fa-user-md text-primary fa-2x"></i>
+              </div>
+              <h3 class="h5">Especialistas Calificados</h3>
+              <p class="text-muted">Medicos especializados en todas las áreas de salud.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="bg-primary-light rounded-3 p-4 p-md-5 mb-5 text-center">
+        <h2 class="h4 mb-3">¿Necesitas atención médica?</h2>
+        <p class="mb-4">Nuestro sistema te permite gestionar tus citas de manera rápida y segura.</p>
+        <a href="/login" class="btn btn-primary px-4">
+          <i class="fas fa-sign-in-alt me-2"></i> Iniciar Sesión
+        </a>
+      </div>
+
+      <!-- Services Section -->
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-body p-4">
+              <h3 class="h5 mb-3"><i class="fas fa-calendar-day text-primary me-2"></i> Agenda de Citas</h3>
+              <ul class="list-unstyled text-muted">
+                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Selecciona tu especialista</li>
+                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Elige fecha y hora</li>
+                <li><i class="fas fa-check-circle text-success me-2"></i> Recibe confirmación inmediata</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-body p-4">
+              <h3 class="h5 mb-3"><i class="fas fa-file-medical text-primary me-2"></i> Historial Médico</h3>
+              <ul class="list-unstyled text-muted">
+                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Acceso seguro 24/7</li>
+                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Resultados de exámenes</li>
+                <li><i class="fas fa-check-circle text-success me-2"></i> Recetas digitales</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('layout/footer') %>

@@ -1,0 +1,97 @@
+<%- include('../layout/header') %>
+<%- include('../layout/menu') %>
+
+<div class="container mt-5">
+  <h2 class="mb-4 text-center">Editar Doctor</h2>
+
+  <% if (mensaje) { %>
+    <div class="alert alert-danger text-center"><%= mensaje %></div>
+  <% } %>
+
+  <form method="POST" action="/admin/doctores/<%= doctor.id %>/editar">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" name="nombre" id="nombre" class="form-control" value="<%= doctor.nombre %>" required />
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="apellido" class="form-label">Apellido</label>
+        <input type="text" name="apellido" id="apellido" class="form-control" value="<%= doctor.apellido %>" required />
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="especialidad" class="form-label">Especialidad</label>
+      <input type="text" name="especialidad" id="especialidad" class="form-control" value="<%= doctor.especialidad %>" required />
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="email" class="form-label">Correo electrónico</label>
+        <input type="email" name="email" id="email" class="form-control" value="<%= doctor.email %>" required />
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="telefono" class="form-label">Teléfono</label>
+        <input type="text" name="telefono" id="telefono" class="form-control" value="<%= doctor.telefono %>" required />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="password" class="form-label">Nueva contraseña (opcional)</label>
+        <input type="password" name="password" id="password" class="form-control" />
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="confirmarPassword" class="form-label">Confirmar contraseña</label>
+        <input type="password" name="confirmarPassword" id="confirmarPassword" class="form-control" />
+      </div>
+    </div>
+
+    <hr />
+    <h5 class="mt-4 mb-3">Editar Horarios</h5>
+
+    <% if (doctor.horarios && doctor.horarios.length) { %>
+      <% doctor.horarios.forEach((horario, index) => { %>
+        <div class="card mb-3">
+          <div class="card-body">
+            <h6 class="mb-3">Horario para <strong><%= horario.dia %></strong></h6>
+            <input type="hidden" name="horarios[<%= index %>][id]" value="<%= horario.id %>" />
+            <input type="hidden" name="horarios[<%= index %>][dia]" value="<%= horario.dia %>" />
+
+            <div class="row">
+              <div class="col-md-3 mb-3">
+                <label class="form-label">Entrada</label>
+                <input type="time" name="horarios[<%= index %>][horaInicio]" value="<%= horario.horaInicio.substring(0,5) %>" class="form-control" required />
+              </div>
+              <div class="col-md-3 mb-3">
+                <label class="form-label">Salida</label>
+                <input type="time" name="horarios[<%= index %>][horaFin]" value="<%= horario.horaFin.substring(0,5) %>" class="form-control" required />
+              </div>
+              <div class="col-md-3 mb-3">
+                <label class="form-label">Comida (Inicio)</label>
+                <input type="time" name="horarios[<%= index %>][comidaInicio]" value="<%= horario.comidaInicio ? horario.comidaInicio.substring(0,5) : '' %>" class="form-control" />
+              </div>
+              <div class="col-md-3 mb-3">
+                <label class="form-label">Comida (Fin)</label>
+                <input type="time" name="horarios[<%= index %>][comidaFin]" value="<%= horario.comidaFin ? horario.comidaFin.substring(0,5) : '' %>" class="form-control" />
+              </div>
+            </div>
+
+            <div class="mb-2">
+              <label class="form-label">Horas disponibles</label>
+              <input type="number" name="horarios[<%= index %>][horasDisponibles]" value="<%= horario.horasDisponibles %>" class="form-control" required />
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p class="text-muted">Este doctor no tiene horarios definidos.</p>
+    <% } %>
+
+    <div class="d-grid mt-4">
+      <button type="submit" class="btn btn-azul">Guardar cambios</button>
+    </div>
+  </form>
+</div> 
+
+<%- include('../layout/footer') %>

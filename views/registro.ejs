@@ -1,0 +1,127 @@
+<%- include('layout/header') %>
+<%- include('layout/menu') %>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-body">
+          <h2 class="text-center mb-4">Registro de Paciente</h2>
+
+          <% if (mensaje) { %>
+            <div class="alert alert-danger text-center">
+              <%= mensaje %> 
+            </div>
+          <% } %>
+
+          <form method="POST" action="/registro">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <div class="input-icon">
+                  <i class="fas fa-user"></i> <!-- Icono de nombre -->
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="nombre"
+                    name="nombre"
+                    value="<%= datos?.nombre || '' %>"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="apellido" class="form-label">Apellido</label>
+                <div class="input-icon">
+                  <i class="fas fa-user"></i> <!-- Icono de apellido -->
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="apellido"
+                    name="apellido"
+                    value="<%= datos?.apellido || '' %>"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Correo electrónico</label>
+              <div class="input-icon">
+                <i class="fas fa-envelope"></i> <!-- Icono de correo -->
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  value="<%= datos?.email || '' %>"
+                  required
+                />
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="telefono">Teléfono</label>
+              <div class="input-icon">
+                <i class="fas fa-phone"></i> <!-- Icono de teléfono -->
+                <input type="text" class="form-control" id="telefono" name="telefono" required />
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="fechaNacimiento">Fecha de Nacimiento</label>
+              <div class="input-icon">
+                <i class="fas fa-calendar-alt"></i> <!-- Icono de fecha -->
+                <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" required />
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <div class="input-icon">
+                  <i class="fas fa-lock"></i> <!-- Icono de contraseña -->
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    name="password"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="confirmarPassword" class="form-label">Confirmar contraseña</label>
+                <div class="input-icon">
+                  <i class="fas fa-lock"></i> <!-- Icono de confirmar contraseña -->
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="confirmarPassword"
+                    name="confirmarPassword"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-success">
+                <i class="fas fa-check-circle"></i> Registrarse <!-- Icono de registrar -->
+              </button>
+            </div>
+          </form>
+
+          <div class="text-center mt-3">
+            <p>¿Ya tienes cuenta? <a href="/login" class="text-primary">Inicia sesión aquí</a></p> <!-- Color azul para el enlace -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('layout/footer') %>

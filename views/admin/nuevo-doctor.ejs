@@ -1,0 +1,110 @@
+<%- include('../layout/header') %>
+<%- include('../layout/menu') %>
+
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Registrar Nuevo Doctor</h2>
+
+  <% if (mensaje) { %>
+    <div class="alert alert-danger text-center"><%= mensaje %></div>
+  <% } %>
+
+  <form method="POST" action="/admin/nuevo-doctor">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label>Nombre</label>
+        <input type="text" name="nombre" class="form-control" required />
+      </div>
+      <div class="col-md-6 mb-3">
+        <label>Apellido</label>
+        <input type="text" name="apellido" class="form-control" required />
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label>Especialidad</label>
+      <input type="text" name="especialidad" class="form-control" required />
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label>Email</label>
+        <input type="email" name="email" class="form-control" required />
+      </div>
+      <div class="col-md-6 mb-3">
+        <label>Teléfono</label>
+        <input type="text" name="telefono" class="form-control" required />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label>Contraseña</label>
+        <input type="password" name="password" class="form-control" required />
+      </div>
+      <div class="col-md-6 mb-3">
+        <label>Confirmar Contraseña</label>
+        <input type="password" name="confirmarPassword" class="form-control" required />
+      </div>
+    </div>
+
+    <hr />
+    <h5 class="mb-3">Selecciona los días que trabaja y define su horario</h5>
+
+    <% const dias = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]; %>
+    <% dias.forEach((dia, i) => { %>
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="form-check form-switch mb-3">
+            <input class="form-check-input dia-toggle" type="checkbox" id="dia-<%= dia %>" name="dias[<%= i %>][activo]" value="1">
+            <label class="form-check-label" for="dia-<%= dia %>">Trabaja los <%= dia %></label>
+          </div>
+
+          <div class="row horario-dia" id="inputs-<%= dia %>" style="display: none;">
+            <input type="hidden" name="dias[<%= i %>][dia]" value="<%= dia %>" />
+            <div class="col-md-3 mb-2">
+              <label>Entrada</label>
+              <input type="time" name="dias[<%= i %>][horaInicio]" class="form-control" />
+            </div>
+            <div class="col-md-3 mb-2">
+              <label>Salida</label>
+              <input type="time" name="dias[<%= i %>][horaFin]" class="form-control" />
+            </div>
+            <div class="col-md-3 mb-2">
+              <label>Comida (inicio)</label>
+              <input type="time" name="dias[<%= i %>][comidaInicio]" class="form-control" />
+            </div>
+            <div class="col-md-3 mb-2">
+              <label>Comida (fin)</label>
+              <input type="time" name="dias[<%= i %>][comidaFin]" class="form-control" />
+            </div>
+            <div class="col-md-3 mt-2">
+              <label>Horas disponibles</label>
+              <input type="number" name="dias[<%= i %>][horasDisponibles]" class="form-control" />
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+
+    <div class="d-grid">
+      <button type="submit" class="btn btn-azul">Registrar Doctor</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  document.querySelectorAll(".dia-toggle").forEach(toggle => {
+    toggle.addEventListener("change", () => {
+      const dia = toggle.id.split("-")[1];
+      const inputs = document.getElementById("inputs-" + dia);
+      if (toggle.checked) {
+        inputs.style.display = "flex";
+        inputs.classList.add("gap-3");
+      } else {
+        inputs.style.display = "none";
+      }
+    });
+  });
+</script>
+
+<%- include('../layout/footer') %>

@@ -1,0 +1,59 @@
+<%- include('../layout/header') %>
+<%- include('../layout/menu') %>
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Nueva Cita Médica</h2>
+
+  <% if (mensaje) { %> 
+    <div class="alert alert-danger text-center"><%= mensaje %></div>
+  <% } %>
+
+  <form method="POST" action="/admin/citas/nueva">
+    <div class="mb-3">
+      <label class="form-label">Paciente</label>
+      <select name="pacienteId" class="form-select" required>
+        <option value="">Selecciona un paciente</option>
+        <% pacientes.forEach(p => { %>
+          <option value="<%= p.id %>"><%= p.nombre %> <%= p.apellido %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Doctor</label>
+      <select name="doctorId" class="form-select" required>
+        <option value="">Selecciona un doctor</option>
+        <% doctores.forEach(d => { %>
+          <option value="<%= d.id %>"><%= d.nombre %> <%= d.apellido %> - <%= d.especialidad %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Fecha</label>
+        <input type="date" name="fecha" class="form-control" required />
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Hora</label>
+        <input type="time" name="hora" class="form-control" required />
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Estado</label>
+      <select name="estado" class="form-select">
+        <option value="pendiente">Pendiente</option>
+        <option value="confirmada">Confirmada</option>
+        <option value="completada">Completada</option>
+      </select>
+    </div>
+
+    <div class="d-grid mt-4">
+      <button type="submit" class="btn btn-azul">
+        <i class="fas fa-calendar-check me-2"></i> Crear Cita
+      </button>
+    </div>
+  </form>
+</div>
+
+<%- include('../layout/footer') %>

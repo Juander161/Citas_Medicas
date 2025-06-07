@@ -1,0 +1,118 @@
+<%- include('../layout/header') %>
+<%- include('../layout/menu') %>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-body">
+          <h2 class="card-title text-center mb-4">
+            <i class="fas fa-calendar-plus"></i> Agendar Nueva Cita
+          </h2>
+          
+          <% if (mensaje) { %>
+            <div class="alert alert-danger" role="alert">
+              <%= mensaje %>
+            </div>
+          <% } %>
+          
+          <form action="/citas/nueva" method="POST" id="formulario-cita">
+            <div class="mb-3">
+              <label for="doctor" class="form-label">
+                <i class="fa-solid fa-user-doctor"></i> Doctor
+              </label>
+              <select class="form-select" id="doctor" name="doctorId" required>
+                <option value="">Seleccione un doctor</option>
+                <% doctores.forEach(doctor => { %>
+                  <option value="<%= doctor.id %>">
+                    <%= doctor.nombre %> <%= doctor.apellido %> - <%= doctor.especialidad %>
+                  </option>
+                <% }); %>
+              </select>
+            </div>
+            
+            <div class="mb-3">
+              <label for="fecha" class="form-label">
+                <i class="fas fa-calendar-day"></i> Fecha
+              </label>
+              <input type="date" class="form-control" id="fecha" name="fecha" required>
+            </div>
+            
+            <div class="mb-3">
+              <label for="hora" class="form-label">
+                <i class="fas fa-clock"></i> Hora
+              </label>
+              <select class="form-select" id="hora" name="hora" required disabled>
+                <option value="">Seleccione una fecha y un doctor</option>
+              </select>
+            </div>
+            
+            <div class="mb-3">
+              <label for="motivo" class="form-label">
+                <i class="fas fa-comment-medical"></i> Motivo de la Consulta
+              </label>
+              <textarea class="form-control" id="motivo" name="motivo" rows="3" required></textarea>
+            </div>
+            
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-azul">
+                <i class="fas fa-calendar-check"></i> Agendar Cita
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const fechaInput = document.getElementById('fecha');
+    const doctorSelect = document.getElementById('doctor');
+    const horaSelect = document.getElementById('hora');
+
+    const hoy = new Date();
+    const fechaMinima = hoy.toISOString().split('T')[0];
+    fechaInput.min = fechaMinima;
+
+    async function cargarHorarios() {
+      const doctorId = doctorSelect.value;
+      const fecha = fechaInput.value;
+
+      horaSelect.innerHTML = '';
+      if (!doctorId || !fecha) {
+        horaSelect.disabled = true;
+        horaSelect.innerHTML = '<option value="">Seleccione una fecha y un doctor</option>';
+        return;
+      }
+
+      try {
+        horaSelect.disabled = false;
+        horaSelect.innerHTML = '<option value="">Cargando horarios...</option>';
+
+        const res = await fetch(`/doctor/horarios/${doctorId}?fecha=${fecha}`);
+        const data = await res.json();
+
+        horaSelect.innerHTML = '';
+
+        if (!Array.isArray(data) || data.length === 0) {
+          horaSelect.innerHTML = '<option value="">No hay horarios disponibles</option>';
+        } else {
+          horaSelect.innerHTML = '<option value="">Seleccione una hora</option>';
+          data.forEach(hora => {
+            horaSelect.innerHTML += `<option value="${hora}">${hora}</option>`;
+          });
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        horaSelect.innerHTML = '<option value="">Error al cargar horarios</option>';
+      }
+    }
+
+    doctorSelect.addEventListener('change', cargarHorarios);
+    fechaInput.addEventListener('change', cargarHorarios);
+  });
+</script>
+
+<%- include('../layout/footer') %>

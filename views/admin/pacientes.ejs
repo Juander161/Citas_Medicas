@@ -1,0 +1,56 @@
+<%- include('../layout/header') %>
+<%- include('../layout/menu') %>
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Gestión de Pacientes</h1>
+  </div>
+
+  <div class="card shadow">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead class="table-light">
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Teléfono</th>
+              <th>Fecha de Nacimiento</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (pacientes && pacientes.length) { %>
+              <% pacientes.forEach(paciente => { %>
+                <tr>
+                  <td><%= paciente.id %></td>
+                  <td><%= paciente.nombre %> <%= paciente.apellido %></td>
+                  <td><%= paciente.email %></td>
+                  <td><%= paciente.telefono %></td>
+                  <td><%= new Date(paciente.fechaNacimiento).toLocaleDateString() %></td>
+                  <td>
+                    <div class="btn-group">
+                      <a href="/admin/citas/nueva?pacienteId=<%= paciente.id %>" class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-calendar-plus"></i> Nueva Cita
+                      </a>
+                      <a href="/admin/pacientes/historial/<%= paciente.id %>" class="btn btn-sm btn-outline-info">
+                        <i class="fas fa-history"></i> Historial
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              <% }) %>
+            <% } else { %>
+              <tr>
+                <td colspan="6" class="text-center no-record">No hay pacientes registrados</td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../layout/footer') %>
+
